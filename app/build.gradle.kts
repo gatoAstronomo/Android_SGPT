@@ -37,12 +37,16 @@ android {
 
 object Versions {
     const val retrofit = "2.11.0"
+    const val recyclerview = "28.0.0"
+    const val coroutines = "1.5.2"
     // Otras versiones...
 }
 
 object MyLibs {
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
     const val converter_gson = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    const val recyclerview = "com.android.support:recyclerview-v7:${Versions.recyclerview}"
+    const val coroutines = "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     // Otras dependencias...
 }
 
@@ -60,5 +64,6 @@ dependencies {
 
     implementation(MyLibs.retrofit)
     implementation(MyLibs.converter_gson)
+    implementation(MyLibs.coroutines)
 
 }
