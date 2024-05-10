@@ -38,7 +38,7 @@ android {
 object Versions {
     const val retrofit = "2.11.0"
     const val recyclerview = "28.0.0"
-    const val coroutines = "1.5.2"
+    const val coroutines = "1.8.0"
     // Otras versiones...
 }
 

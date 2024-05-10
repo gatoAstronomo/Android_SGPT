@@ -16,6 +16,18 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 
+    <Button
+        android:id="@+id/add_task_button"
+        android:layout_width="25pt"
+        android:layout_height="25pt"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:text="+"
+        android:onClick="addTask"
+        android:layout_margin="10dp"
+        />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

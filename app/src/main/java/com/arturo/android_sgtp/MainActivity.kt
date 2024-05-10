@@ -6,35 +6,27 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arturo.android_sgtp.adapters.TaskAdapter
 import com.arturo.android_sgtp.data.RetrofitServiceFactory
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
+import com.arturo.android_sgtp.data.TaskRepository
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var taskAdapter: TaskAdapter
+    private lateinit var recyclerView: RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        recyclerView = findViewById(R.id.task_list)
 
-        val recyclerView = findViewById<RecyclerView>(R.id.task_list)
-
-        val retrofitService = RetrofitServiceFactory.makeRetrofitService()
-        suspend fun getTasks(rut: String): List<Task>? {
-            val response = retrofitService.getTasks("12345678-9").awaitResponse()
-            if (response.status == 200) {
-                val tasks = response.body()
-                recyclerView.adapter = TaskAdapter(tasks)
-
-            } else if (response.status == 404){
-                var voidTask = Task("No hay tareas", "", "")
-                recyclerView.adapter = TaskAdapter(listOf(voidTask))
-            }
+        val taskRepository = TaskRepository.getInstance()
+        lifecycleScope.launch {
+            val taskList = taskRepository.getTasks(123456789)
+            recyclerView.adapter = TaskAdapter(taskList)
         }
 
 
