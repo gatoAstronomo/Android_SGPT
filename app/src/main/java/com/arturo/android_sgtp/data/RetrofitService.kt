@@ -1,12 +1,14 @@
 package com.arturo.android_sgtp.data
 
 import com.arturo.android_sgtp.data.model.Task
+import retrofit2.HttpException
 
 import retrofit2.Retrofit
 import retrofit2.Response
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
+import java.io.IOException
 
 interface RetrofitService {
     @GET("tasks")
@@ -30,23 +32,14 @@ class TaskRepository private constructor() {
     private val retrofitService = RetrofitServiceFactory.makeRetrofitService()
 
     suspend fun getTasks(rut: Int): List<Task> {
-        val response = try {
-            retrofitService.getTasks(rut)
+        return try {
+            retrofitService.getTasks(rut).body() ?: emptyList()
         } catch (e: Exception) {
             // Manejar errores de red u otros errores
-            return listOf(
-                Task("Error al descargar sus tareas", "", "")
+            listOf(
+                Task("Error al descargar sus tareas", "", ""),
+                Task("Error al descargar sus tareas", "", ""),
             )
-        }
-        if (response.isSuccessful && response.code() == 200) {
-            val tasks = response.body() ?: emptyList()
-            return response.body() ?: emptyList()
-        } else if (response.code() == 404) {
-            return listOf(Task("NO HAY TAREAS", "", ""))
-        } else {
-            // Manejar otros códigos de estado HTTP
-            val message = "Error ${response.code()}: ${response.message()}"
-            return emptyList()
         }
     }
 

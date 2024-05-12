@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         val taskRepository = TaskRepository.getInstance()
         lifecycleScope.launch {
             val taskList = taskRepository.getTasks(123456789)
+            print(taskList)
             recyclerView.adapter = TaskAdapter(taskList)
         }
 
